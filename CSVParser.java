@@ -6,14 +6,14 @@ import java.io.*;
  */
 public class CSVParser {
 
-		// recReceived - number of records in the CSV file	
-		public static int recReceived;
+		// numReceived - number of records in the CSV file	
+		public static int numReceived = 0;
 		
-		// recSuccess - number of successful insertions into db
-		public static int recSuccess;
+		// numSuccessful - number of successful insertions into db
+		public static int numSuccessful = 0;
 
 		// numHeaders - number of headers in the CSV file
-		public static int numHeaders;
+		public static int numHeaders = 0;
 
 		// fileScanner - Scanner to read in CSV file
 		public static Scanner fileScanner;
@@ -55,7 +55,11 @@ public class CSVParser {
 			try {
 
 				PrintWriter pw = new PrintWriter(args[0].substring(0, args[0].length() - 4) + ".log");
-				pw.print("Test");
+
+				pw.println("Number of records received: \t" + numReceived);
+				pw.println("Number of records successful: \t" + numSuccessful);
+				pw.println("Number of records failed: \t\t" + (numReceived - numSuccessful));
+
 				pw.close();
 
 			}
