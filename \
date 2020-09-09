@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.io.*;
+
 
 /**
  *
@@ -15,45 +15,34 @@ public class CSVParser {
 		// numHeaders - number of headers in the CSV file
 		public static int numHeaders;
 
-		// fileScanner - Scanner to read in CSV file
-		public static Scanner fileScanner;
+		// filename - name of CSV file
+		public static String filename;
 
 		/**
 		 *
 		 */
 		public static void main(String[] args) {
-		
-			// First check if the user supplied a command line argument	
+			
 			if (args.length > 0) {
 
-				// Try to open file scanner
-				try {
+				filename = args[0];	
 
-					fileScanner = new Scanner(new File(args[0]));
-					System.out.println(fileScanner.nextLine());
-
-					// Parse the file
-					parseFile();
-
-				}
-				// If file not found, print error message.
-				catch (FileNotFoundException e) {
-
-					System.err.println("\n" + e + "\n");
-
-				}
-
+				//try {
+				//}
+				//catch (FileNotFoundException e) {
+				//	System.err.println("");
+				//}
 			}
-			// If no argument, print an error message with the proper format.
 			else {
-
-				System.err.println("\nError: Too few command line arguments. Please provide a file name.\n");
-				System.err.println("Format: java CSVParser <CSV-filename>\n");
-
+				System.err.println("\nError: Too few command line arguments. Please provide a file name.");
+				System.err.println("\njava CSVParser <CSV-filename>\n");
 			}
 			
+			// Try catch file opening
 			
 			// If open, call parseFile()
+
+			// Else, print error message
 
 			// Close file
 
