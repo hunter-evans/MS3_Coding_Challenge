@@ -30,7 +30,6 @@ public class CSVParser {
 				try {
 
 					fileScanner = new Scanner(new File(args[0]));
-					System.out.println(fileScanner.nextLine());
 
 					// Parse the file
 					parseFile();
@@ -52,12 +51,20 @@ public class CSVParser {
 
 			}
 			
-			
-			// If open, call parseFile()
+			// Open a print writer for the log file
+			try {
 
-			// Close file
+				PrintWriter pw = new PrintWriter(args[0].substring(0, args[0].length() - 4) + ".log");
+				pw.print("Test");
+				pw.close();
 
-			// Write log file
+			}
+			// If somehow file not found, print error message.
+			catch (FileNotFoundException e) {
+					
+				System.err.println("\n" + e + "\n");
+
+			}
 		}
 
 		/**
