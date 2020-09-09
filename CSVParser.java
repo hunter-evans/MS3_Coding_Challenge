@@ -12,18 +12,6 @@ public class CSVParser {
 	// numSuccessful - number of successful insertions into db
 	public static int numSuccessful = 0;
 
-	// headers - headers in the CSV file
-	public static String[] headers;
-
-	// filename - name of the CSV file (w/o file extension)
-	public static String filename;
-
-	// fileScanner - Scanner to read in CSV file
-	public static Scanner fileScanner;
-
-	// badPrintWriter - Print Writer for bad CSV
-	public static PrintWriter badPrintWriter;
-
 	/**
 	 *
 	 */
@@ -32,38 +20,27 @@ public class CSVParser {
 		// First check if the user supplied a command line argument	
 		if (args.length > 0) {
 
-			try {
-
-				// Try to open file scanner
-				fileScanner = new Scanner(new File(args[0]));
-
-				// Generate the filename w/o extension
-				filename = args[0].substring(0, args[0].length() - 4);
+			// Next check if supplied a CSV file (i.e. the file name ends .csv)
+			if(args[0].substring(args[0].length() - 4) == ".csv") {
 
 				try {
 
-					// Generate print writer for bad CSV file
-					badPrintWriter = new PrintWriter(filename + "-bad.csv");
+					// Parse file only if sanity checks pass
+					parseFile(args[0]);
 
 				}
-				// If somehow file not found, print error message.
+				// If file not found, print error message.
 				catch (FileNotFoundException e) {
 
 					System.err.println("\n" + e + "\n");
 
 				}
 
-				// Parse the file
-				parseFile();
-
-				// Close the bad CSV print writer
-				badPrintWriter.close();
-
 			}
-			// If file not found, print error message.
-			catch (FileNotFoundException e) {
+			// If CSV not supplied, print error message.
+			else {
 
-				System.err.println("\n" + e + "\n");
+				System.err.println("\nError: CSV file not supplied (missing .csv extension).\n");
 
 			}
 
@@ -76,32 +53,54 @@ public class CSVParser {
 
 		}
 		
-		// Generate log file
-		generateLogFile();
-
 	}
 
 	/**
 	 *
 	 */
-	public static void parseFile() {
+	public static void parseFile(String fileArg) throws FileNotFoundException {
+
+		// Try to open file scanner
+		Scanner fileScanner = new Scanner(new File(fileArg));
+
+		// Generate the filename w/o extension
+		String filename = fileArg.substring(0, fileArg.length() - 4);
+
+		// Generate print writer for bad CSV file
+		PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
 
 		// Get headers from first line
-		headers = fileScanner.nextLine().split(",");
+		String[] headers = fileScanner.nextLine().split(",");
+
+		// TODO: Setup db file writer with headers
 
 		// Iterate over the file while there are still lines
 		while (fileScanner.hasNext()) {
 
-			parseLine(fileScanner.nextLine());
+			parseLine(fileScanner.nextLine(), badPrintWriter, headers.length);
 
 		}
+
+		// Close the bad CSV print writer
+		badPrintWriter.close();
+		
+		// Generate a print writer for the log file.
+		PrintWriter pw = new PrintWriter(filename + ".log");
+
+		// Write the statistics.
+		pw.println("Number of records received: \t" + numReceived);
+		pw.println("Number of records successful: \t" + numSuccessful);
+		pw.println("Number of records failed: \t\t" + (numReceived - numSuccessful));
+
+		// Close the print writer.
+		pw.close();
 
 	}
 
 	/**
 	 *
 	 */
-	public static void parseLine(String line) {
+	public static void parseLine(String line, PrintWriter badPW, int numHeaders) {
 
 		// Increment number of received records
 		numReceived++;
@@ -110,50 +109,22 @@ public class CSVParser {
 		String[] lineParts = line.split(",");
 
 		// If there are the correct number of entries
-		if (lineParts.length == headers.length) {
+		if (lineParts.length == numHeaders) {
 
 			// Increment the number of successful records
 			numSuccessful++;
 
-			// Insert record into database
+			// TODO: Insert record into database
 
 		}
 		// If there are not the correct number of entries
 		else {
 		
 			// Write the line to the bad CSV file
-			badPrintWriter.println();
+			badPW.println(line);
 
 		}
 
 	}
 
-	/**
-	 *
-	 */
-	public static void generateLogFile() {
-
-		// Open a print writer for the log file
-		try {
-
-			PrintWriter pw = new PrintWriter(filename + ".log");
-
-			// Write the statistics.
-			pw.println("Number of records received: \t" + numReceived);
-			pw.println("Number of records successful: \t" + numSuccessful);
-			pw.println("Number of records failed: \t\t" + (numReceived - numSuccessful));
-
-			// Close the print writer.
-			pw.close();
-
-		}
-		// If somehow file not found, print error message.
-		catch (FileNotFoundException e) {
-				
-			System.err.println("\n" + e + "\n");
-
-		}
-
-	}
-	
 }
