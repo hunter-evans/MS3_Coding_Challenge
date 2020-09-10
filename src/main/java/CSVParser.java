@@ -17,11 +17,11 @@ public class CSVParser {
     /**
      * numReceived - number of records in the CSV file
      */
-    public static int numReceived = 0;
+    private static int numReceived = 0;
     /**
      * numSuccessful - number of successful insertions into db
      */
-    public static int numSuccessful = 0;
+    private static int numSuccessful = 0;
     /**
      * Main method for the classm, which launches the parser.
      */
@@ -43,7 +43,7 @@ public class CSVParser {
      * @param fileArg - The name of the file
      * @throws FileNotFoundException - For the scanners and print writers
      */
-    public static void parseFile(String fileArg) throws FileNotFoundException {
+    private static void parseFile(String fileArg) throws FileNotFoundException {
         // Try to open file scanner
         Scanner fileScanner = new Scanner(new File(fileArg));
         // Generate the filename w/o extension
@@ -52,19 +52,19 @@ public class CSVParser {
         PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
         // Get headers from first line
         ArrayList<String> headers = customSplit(fileScanner.nextLine());
-        for(int i = 0; i < headers.size(); i++) {
-            System.out.print(headers.get(i) + ",");
+        for (String s : headers) {
+            System.out.print(s + ",");
         }
-        System.out.println("");
+        System.out.println();
         try {
             // Create new database file
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
             // Create table w/ headers
             String sql = "CREATE TABLE IF NOT EXISTS " + filename + "(\n";
             String headerString = "(";
-            for(int i = 0; i < headers.size(); i++) {
-                sql = sql + "\t" + headers.get(i) + " TEXT NOT NULL,\n";
-                headerString = headerString + headers.get(i) + ",";
+            for (String s : headers) {
+                sql = sql + "\t" + s + " TEXT NOT NULL,\n";
+                headerString = headerString + s + ",";
             }
             sql = sql + ");";
             headerString = headerString + ")";
@@ -101,7 +101,7 @@ public class CSVParser {
      * @param numHeaders - The number of columns (headers) for the database.
      * @param c - The connection to the database file.
      */
-    public static void parseLine(String line, String dbName, PrintWriter badPW, int numHeaders, Connection c, String headings) {
+    private static void parseLine(String line, String dbName, PrintWriter badPW, int numHeaders, Connection c, String headings) {
         // Increment number of received records
         numReceived++;
         // Split line
@@ -112,8 +112,8 @@ public class CSVParser {
             numSuccessful++;
             // Generate record for insertion
             String sql = "INSERT INTO " + dbName + headings + " VALUES(";
-            for (int i = 0; i < lineParts.size(); i++) {
-                sql = sql + lineParts.get(i) + ",";
+            for (String s : lineParts) {
+                sql = sql + s + ",";
             }
             sql = sql + ")";
             // Insert into database
@@ -141,7 +141,7 @@ public class CSVParser {
      * @param line - The line to be split
      * @return An ArrayList of the atoms of the line.
      */
-    public static ArrayList<String> customSplit(String line) {
+    private static ArrayList<String> customSplit(String line) {
         // Create expandable list
         ArrayList<String> result = new ArrayList<String>();
         // Create buffer to contain characters
