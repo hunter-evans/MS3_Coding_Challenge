@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="baec4977-9a1c-4173-bbb0-991411faca16" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms3Interview - Jr Challenge 2-bad.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms3Interview - Jr Challenge 2.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/CSVParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CSVParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ms3Interview - Jr Challenge 2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/ms3Interview.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/CSVParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CSVParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ms3Interview - Jr Challenge 2.csv" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -35,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/CSVParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="94" column="11" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+            <state relative-caret-position="297">
+              <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4995#5003#0" expanded="true" />
@@ -101,8 +100,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
-    <option name="width" value="697" />
+    <option name="x" value="714" />
+    <option name="width" value="659" />
     <option name="height" value="775" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -142,13 +141,6 @@
               <item name="parser_challenge" type="b2602c69:ProjectViewProjectNode" />
               <item name="parser_challenge" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="parser_challenge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="parser_challenge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -170,8 +162,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\H_Evans\Desktop\parser_challenge\src\main\resources" />
       <recent name="C:\Users\H_Evans\Desktop\parser_challenge" />
+      <recent name="C:\Users\H_Evans\Desktop\parser_challenge\src\main\resources" />
       <recent name="C:\Users\H_Evans\Desktop\parser_challenge\src\main\java" />
     </key>
   </component>
@@ -219,7 +211,21 @@
       <option name="project" value="LOCAL" />
       <updated>1599766211973</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Generated SQLite statements for creating table and inserting.">
+      <created>1599768839807</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1599768839807</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Generated SQLite statements for creating table and inserting.">
+      <created>1599769062592</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1599769062592</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -233,22 +239,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.22768533" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16792738" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" weight="0.32872504" />
       <window_info anchor="bottom" id="Terminal" weight="0.32866043" />
       <window_info anchor="bottom" id="Event Log" sideWeight="0.50075644" side_tool="true" weight="0.32872504" />
-      <window_info anchor="bottom" id="Messages" sideWeight="0.49924356" weight="0.32872504" />
+      <window_info anchor="bottom" id="Messages" sideWeight="0.49924356" weight="0.32718894" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3671275" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32866043" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3655914" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -265,7 +270,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Switching to IntelliJ environment." />
-    <option name="LAST_COMMIT_MESSAGE" value="Switching to IntelliJ environment." />
+    <MESSAGE value="Generated SQLite statements for creating table and inserting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Generated SQLite statements for creating table and inserting." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pom.xml">
@@ -275,19 +281,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ms3Interview - Jr Challenge 2.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/ms3Interview - Jr Challenge 2.log">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/ms3Interview - Jr Challenge 2-bad.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/ms3Interview.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="22" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ms3Interview.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ms3Interview.db">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-918" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ms3Interview-bad.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/CSVParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="94" column="11" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+        <state relative-caret-position="297">
+          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4995#5003#0" expanded="true" />

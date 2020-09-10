@@ -28,12 +28,13 @@ public class CSVParser {
     public static void main(String[] args) {
         try {
             // Parse file given the following path
-            parseFile("./src/main/resources/ms3Interview - Jr Challenge 2.csv");
+            parseFile("ms3Interview.csv");
         }
         // If file not found, print error message.
         catch (FileNotFoundException e) {
             System.err.println("\n" + e + "\n");
         }
+        System.out.println("Program complete!");
     }
     /**
      * This method executes the actions at a high level needed to parse the
@@ -44,6 +45,7 @@ public class CSVParser {
      * @throws FileNotFoundException - For the scanners and print writers
      */
     private static void parseFile(String fileArg) throws FileNotFoundException {
+        System.out.println("Beginning file parse...");
         // Try to open file scanner
         Scanner fileScanner = new Scanner(new File(fileArg));
         // Generate the filename w/o extension
@@ -52,13 +54,10 @@ public class CSVParser {
         PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
         // Get headers from first line
         ArrayList<String> headers = customSplit(fileScanner.nextLine());
-        for (String s : headers) {
-            System.out.print(s + ",");
-        }
-        System.out.println();
         try {
             // Create new database file
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
+            System.out.println("Connection established to database file.\nCreating new table...");
             // Create table w/ headers
             String sql = "CREATE TABLE IF NOT EXISTS " + filename + "(\n";
             String headerString = "(";
@@ -66,16 +65,16 @@ public class CSVParser {
                 sql = sql + "\t" + s + " TEXT NOT NULL,\n";
                 headerString = headerString + s + ",";
             }
-            sql = sql + ");";
-            headerString = headerString + ")";
-            System.out.println(sql);
-            System.out.println(headerString);
+            sql = sql.substring(0,sql.length()-2) + "\n);";
+            headerString = headerString.substring(0,headerString.length()-1) + ")";
             // Execute the creation statement
             conn.createStatement().execute(sql);
+            System.out.println("Table successfully created.\nBeginning record insertion...");
             // Iterate over the file while there are still lines
             while (fileScanner.hasNext()) {
                 parseLine(fileScanner.nextLine(), filename, badPrintWriter, headers.size(), conn, headerString);
             }
+            System.out.println("All records successfully inserted. Outputting statistics...");
         }
         catch (SQLException e) {
             System.err.println("\n" + e.getMessage() + "\n");
@@ -111,11 +110,16 @@ public class CSVParser {
             // Increment the number of successful records
             numSuccessful++;
             // Generate record for insertion
-            String sql = "INSERT INTO " + dbName + headings + " VALUES(";
+            String sql = "INSERT INTO " + dbName + headings + "" + "\nVALUES(";
             for (String s : lineParts) {
-                sql = sql + s + ",";
+                if (s.substring(0,1).compareTo("\"") != 0) {
+                    sql = sql + "\"" + s + "\"" + ",";
+                }
+                else {
+                    sql = sql + s + ",";
+                }
             }
-            sql = sql + ")";
+            sql = sql.substring(0,sql.length()-1) + ");";
             // Insert into database
             try {
                 c.createStatement().execute(sql);
