@@ -169,8 +169,13 @@ public class CSVParser {
 					// When delimiter encountered, add to list and flush the buffer
 					if (ch == ',') {
 
-						result.add(curVal.toString());
-						curVal = new StringBuffer();
+						// Only add/flush if the buffer has anything in it
+						if (curVal.length() > 0) {
+
+							result.add(curVal.toString());
+							curVal = new StringBuffer();
+
+						}
 
 					}
 					else {
