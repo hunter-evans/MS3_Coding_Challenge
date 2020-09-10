@@ -23,15 +23,11 @@ public class CSVParser {
      */
     public static int numSuccessful = 0;
     /**
-     * Main method for the class. Performs command line input sanitation and
-     * launches the parser.
-     *
-     * @param args - The command line arguments.
+     * Main method for the classm, which launches the parser.
      */
     public static void main(String[] args) {
-        // First check if the user supplied a command line argument
         try {
-            // Parse file only if sanity checks pass
+            // Parse file given the following path
             parseFile("./src/main/resources/ms3Interview - Jr Challenge 2.csv");
         }
         // If file not found, print error message.
@@ -56,17 +52,32 @@ public class CSVParser {
         PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
         // Get headers from first line
         ArrayList<String> headers = customSplit(fileScanner.nextLine());
-        // TODO: Setup db file writer with headers
+        for(int i = 0; i < headers.size(); i++) {
+            System.out.print(headers.get(i) + ",");
+        }
+        System.out.println("");
         try {
-            //Create new database file
+            // Create new database file
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
+            // Create table w/ headers
+            String sql = "CREATE TABLE IF NOT EXISTS " + filename + "(\n";
+            String headerString = "(";
+            for(int i = 0; i < headers.size(); i++) {
+                sql = sql + "\t" + headers.get(i) + " TEXT NOT NULL,\n";
+                headerString = headerString + headers.get(i) + ",";
+            }
+            sql = sql + ");";
+            headerString = headerString + ")";
+            System.out.println(sql);
+            System.out.println(headerString);
+            // Execute the creation statement
+            conn.createStatement().execute(sql);
             // Iterate over the file while there are still lines
             while (fileScanner.hasNext()) {
-                parseLine(fileScanner.nextLine(), badPrintWriter, headers.size());
+                parseLine(fileScanner.nextLine(), filename, badPrintWriter, headers.size(), conn, headerString);
             }
         }
         catch (SQLException e) {
-            System.err.println("Caught exception");
             System.err.println("\n" + e.getMessage() + "\n");
         }
         // Close the bad CSV print writer
@@ -88,8 +99,9 @@ public class CSVParser {
      * @param line - The line from the CSV.
      * @param badPW - The print writer for the bad CSV.
      * @param numHeaders - The number of columns (headers) for the database.
+     * @param c - The connection to the database file.
      */
-    public static void parseLine(String line, PrintWriter badPW, int numHeaders) {
+    public static void parseLine(String line, String dbName, PrintWriter badPW, int numHeaders, Connection c, String headings) {
         // Increment number of received records
         numReceived++;
         // Split line
@@ -98,8 +110,19 @@ public class CSVParser {
         if (lineParts.size() == numHeaders) {
             // Increment the number of successful records
             numSuccessful++;
-            // TODO: Insert record into database
-
+            // Generate record for insertion
+            String sql = "INSERT INTO " + dbName + headings + " VALUES(";
+            for (int i = 0; i < lineParts.size(); i++) {
+                sql = sql + lineParts.get(i) + ",";
+            }
+            sql = sql + ")";
+            // Insert into database
+            try {
+                c.createStatement().execute(sql);
+            }
+            catch (SQLException e) {
+                System.err.println("\n" + e + "\n");
+            }
         }
         // If there are not the correct number of entries
         else {
