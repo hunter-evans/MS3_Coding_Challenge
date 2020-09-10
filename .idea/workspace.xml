@@ -4,9 +4,6 @@
     <list default="true" id="baec4977-9a1c-4173-bbb0-991411faca16" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/CSVParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CSVParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ms3Interview - Jr Challenge 2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/ms3Interview.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/CSVParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CSVParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ms3Interview - Jr Challenge 2.csv" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -34,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/CSVParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+            <state relative-caret-position="150">
+              <caret line="135" column="56" selection-start-line="135" selection-start-column="56" selection-end-line="135" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4995#5003#0" expanded="true" />
@@ -225,7 +222,21 @@
       <option name="project" value="LOCAL" />
       <updated>1599769062592</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Corrected SQLite syntax errors.">
+      <created>1599770594587</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1599770594587</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Optimized insertion.">
+      <created>1599771687386</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1599771687386</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -238,22 +249,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="714" y="0" width="659" height="775" extended-state="0" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16792738" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.3706177" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" weight="0.32872504" />
       <window_info anchor="bottom" id="Terminal" weight="0.32866043" />
       <window_info anchor="bottom" id="Event Log" sideWeight="0.50075644" side_tool="true" weight="0.32872504" />
-      <window_info anchor="bottom" id="Messages" sideWeight="0.49924356" weight="0.32718894" />
+      <window_info anchor="bottom" id="Messages" sideWeight="0.49924356" weight="0.3271028" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32866043" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3655914" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3317757" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -271,16 +282,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Switching to IntelliJ environment." />
     <MESSAGE value="Generated SQLite statements for creating table and inserting." />
-    <option name="LAST_COMMIT_MESSAGE" value="Generated SQLite statements for creating table and inserting." />
+    <MESSAGE value="Corrected SQLite syntax errors." />
+    <MESSAGE value="Optimized insertion." />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimized insertion." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ms3Interview - Jr Challenge 2.log">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -297,18 +303,23 @@
     <entry file="file://$PROJECT_DIR$/ms3Interview.log">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ms3Interview.db">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-918" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ms3Interview-bad.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/ms3Interview.db">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/CSVParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+        <state relative-caret-position="150">
+          <caret line="135" column="56" selection-start-line="135" selection-start-column="56" selection-end-line="135" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4995#5003#0" expanded="true" />

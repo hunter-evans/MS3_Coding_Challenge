@@ -73,8 +73,8 @@ public class CSVParser {
             headerString = headerString.substring(0,headerString.length()-1) + ")";
             // Execute the creation statement
             conn.createStatement().execute(sql);
-            System.out.println("Table successfully created.\nBeginning record insertion...");
-            insertionStmt = "INSERT INTO " + filename + headerString;
+            System.out.println("Table successfully created.\nBeginning record processing...");
+            insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
             // Iterate over the file while there are still lines
             while (fileScanner.hasNext()) {
                 parseLine(fileScanner.nextLine(), badPrintWriter, headers.size());
@@ -82,9 +82,10 @@ public class CSVParser {
                     System.out.println(numReceived + "\tRecords Processed.");
                 }
             }
+            System.out.println("Finished processing. Beginning record insertion...");
             // Insert the insertion statement.
             insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
-            conn.createStatement().execute(sql);
+            conn.createStatement().execute(insertionStmt);
             System.out.println("All records successfully inserted. Outputting statistics...");
         }
         catch (SQLException e) {
@@ -120,7 +121,7 @@ public class CSVParser {
             // Increment the number of successful records
             numSuccessful++;
             // Generate record for insertion
-            String sql = "\nVALUES(";
+            String sql = "\n\t(";
             for (String s : lineParts) {
                 if (s.substring(0,1).compareTo("\"") != 0) {
                     sql = sql + "\"" + s + "\"" + ",";
