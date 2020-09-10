@@ -1,20 +1,32 @@
 import java.util.Scanner;
-import java.io.*;
 import java.util.ArrayList;
+import java.io.*;
 
 /**
+ * Submission for the MS3 coding challenge. This class takes as a command
+ * line input a CSV file and generates an SQLite database file, a bad CSV
+ * file, and a log file with statistics.
  *
+ * @author Hunter Evans
+ * @version 1.0.0
  */
 public class CSVParser {
 
-	// numReceived - number of records in the CSV file	
+	/**
+	 * numReceived - number of records in the CSV file	
+	 */
 	public static int numReceived = 0;
 	
-	// numSuccessful - number of successful insertions into db
+	/**
+	 * numSuccessful - number of successful insertions into db
+	 */
 	public static int numSuccessful = 0;
 
 	/**
+	 * Main method for the class. Performs command line input sanitation and
+	 * launches the parser.
 	 *
+	 * @param args - The command line arguments.
 	 */
 	public static void main(String[] args) {
 	
@@ -57,7 +69,12 @@ public class CSVParser {
 	}
 
 	/**
+	 * This method executes the actions at a high level needed to parse the
+	 * file, including setting up scanners and print writers, generating the
+	 * headers, iterating over the CSV, and writing the log file.
 	 *
+	 * @param fileArg - The name of the file
+	 * @throws FileNotFoundException - For the scanners and print writers
 	 */
 	public static void parseFile(String fileArg) throws FileNotFoundException {
 
@@ -71,15 +88,14 @@ public class CSVParser {
 		PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
 
 		// Get headers from first line
-		// TODO: Figure out proper regex
-		String[] headers = fileScanner.nextLine().split(",");
+		ArrayList<String> headers = customSplit(fileScanner.nextLine());
 
 		// TODO: Setup db file writer with headers
 
 		// Iterate over the file while there are still lines
 		while (fileScanner.hasNext()) {
 
-			parseLine(fileScanner.nextLine(), badPrintWriter, headers.length);
+			parseLine(fileScanner.nextLine(), badPrintWriter, headers.size());
 
 		}
 
@@ -100,7 +116,13 @@ public class CSVParser {
 	}
 
 	/**
+	 * This method performs the necessary actions to parse a single line of the
+	 * CSV, including writing to the bad CSV, splitting, and inserting into the
+	 * database file.
 	 *
+	 * @param line - The line from the CSV.
+	 * @param badPW - The print writer for the bad CSV.
+	 * @param numHeaders - The number of columns (headers) for the database.
 	 */
 	public static void parseLine(String line, PrintWriter badPW, int numHeaders) {
 
@@ -109,11 +131,6 @@ public class CSVParser {
 		
 		// Split line
 		ArrayList<String> lineParts = customSplit(line);
-
-		// for(String s : lineParts) {
-		// 	System.out.println(s);
-		// }
-		// System.out.println("");
 
 		// If there are the correct number of entries
 		if (lineParts.size() == numHeaders) {
@@ -135,7 +152,12 @@ public class CSVParser {
 	}
 
 	/**
+	 * This method performs a custom split of the line. This will split a
+	 * line based on the location of commas which are not between a set of
+	 * quotation marks.
 	 *
+	 * @param line - The line to be split
+	 * @return An ArrayList of the atoms of the line.
 	 */
 	public static ArrayList<String> customSplit(String line) {
 
