@@ -21,7 +21,7 @@ public class CSVParser {
 		if (args.length > 0) {
 
 			// Next check if supplied a CSV file (i.e. the file name ends .csv)
-			if(args[0].substring(args[0].length() - 4) == ".csv") {
+			if(args[0].substring(args[0].length() - 4).compareTo(".csv") == 0) {
 
 				try {
 
@@ -70,6 +70,7 @@ public class CSVParser {
 		PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
 
 		// Get headers from first line
+		// TODO: Figure out proper regex
 		String[] headers = fileScanner.nextLine().split(",");
 
 		// TODO: Setup db file writer with headers
@@ -106,6 +107,7 @@ public class CSVParser {
 		numReceived++;
 		
 		// Split line
+		// TODO: Figure out proper regex
 		String[] lineParts = line.split(",");
 
 		// If there are the correct number of entries
