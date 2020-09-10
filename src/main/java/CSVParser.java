@@ -23,6 +23,10 @@ public class CSVParser {
      */
     private static int numSuccessful = 0;
     /**
+     * insertionStmt - the final line used to insert valid records
+     */
+    private static String insertionStmt = "";
+    /**
      * Main method for the classm, which launches the parser.
      */
     public static void main(String[] args) {
@@ -70,10 +74,17 @@ public class CSVParser {
             // Execute the creation statement
             conn.createStatement().execute(sql);
             System.out.println("Table successfully created.\nBeginning record insertion...");
+            insertionStmt = "INSERT INTO " + filename + headerString;
             // Iterate over the file while there are still lines
             while (fileScanner.hasNext()) {
-                parseLine(fileScanner.nextLine(), filename, badPrintWriter, headers.size(), conn, headerString);
+                parseLine(fileScanner.nextLine(), badPrintWriter, headers.size());
+                if(numReceived % 100 == 0) {
+                    System.out.println(numReceived + "\tRecords Processed.");
+                }
             }
+            // Insert the insertion statement.
+            insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
+            conn.createStatement().execute(sql);
             System.out.println("All records successfully inserted. Outputting statistics...");
         }
         catch (SQLException e) {
@@ -98,9 +109,8 @@ public class CSVParser {
      * @param line - The line from the CSV.
      * @param badPW - The print writer for the bad CSV.
      * @param numHeaders - The number of columns (headers) for the database.
-     * @param c - The connection to the database file.
      */
-    private static void parseLine(String line, String dbName, PrintWriter badPW, int numHeaders, Connection c, String headings) {
+    private static void parseLine(String line, PrintWriter badPW, int numHeaders) {
         // Increment number of received records
         numReceived++;
         // Split line
@@ -110,7 +120,7 @@ public class CSVParser {
             // Increment the number of successful records
             numSuccessful++;
             // Generate record for insertion
-            String sql = "INSERT INTO " + dbName + headings + "" + "\nVALUES(";
+            String sql = "\nVALUES(";
             for (String s : lineParts) {
                 if (s.substring(0,1).compareTo("\"") != 0) {
                     sql = sql + "\"" + s + "\"" + ",";
@@ -119,14 +129,7 @@ public class CSVParser {
                     sql = sql + s + ",";
                 }
             }
-            sql = sql.substring(0,sql.length()-1) + ");";
-            // Insert into database
-            try {
-                c.createStatement().execute(sql);
-            }
-            catch (SQLException e) {
-                System.err.println("\n" + e + "\n");
-            }
+            insertionStmt = insertionStmt + sql.substring(0,sql.length()-1) + "),";
         }
         // If there are not the correct number of entries
         else {
