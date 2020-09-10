@@ -1,10 +1,8 @@
-package com.MS3.app;
-
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*;
 
-import org.sqlite.JDBC;
+//import org.sqlite.JDBC;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
