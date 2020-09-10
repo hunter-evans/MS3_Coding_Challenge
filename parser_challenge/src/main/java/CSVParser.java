@@ -4,6 +4,14 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*;
 
+import org.sqlite.JDBC;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.DatabaseMetaData;
+
 /**
  * Submission for the MS3 coding challenge. This class takes as a command
  * line input a CSV file and generates an SQLite database file, a bad CSV
@@ -31,10 +39,27 @@ public class CSVParser {
 	 * @param args - The command line arguments.
 	 */
 	public static void main(String[] args) {
+
+		try {
+			// try {
+			// 	Class.forName("org.sqlite.JDBC");
+			// } catch (ClassNotFoundException e) {
+			// 	System.err.println(e);
+			// }
+
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:sample.db");
+			DatabaseMetaData meta = conn.getMetaData();
+			System.out.println("The driver name is " + meta.getDriverName());
+			System.out.println("A new database has been created.");
+
+		}
+		catch (SQLException e) {
+			System.err.println("Caught exception");
+			System.err.println("\n" + e.getMessage() + "\n");
+		}
 	
 		// First check if the user supplied a command line argument	
 		if (args.length > 0) {
-
 			// Next check if supplied a CSV file (i.e. the file name ends .csv)
 			if(args[0].substring(args[0].length() - 4).compareTo(".csv") == 0) {
 
