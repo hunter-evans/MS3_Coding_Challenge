@@ -21,47 +21,38 @@ public class CSVParser extends JPanel {
      * textArea - The text area representing output for the program.
      */
     private static JTextArea textArea;
-
     /**
      * fileScanner - The scanner for the CSV file.
      */
     private static Scanner fileScanner;
-
     /**
      * filename - The name of the csv (w/o file extension)
      */
     private static String filename;
-
     /**
      * badPrintWriter - The print writer for the bad CSV file.
      */
     private static PrintWriter badPrintWriter;
-
     /**
      * headers - The ArrayList containing the headers for the db.
      */
     private static ArrayList<String> headers;
-
     /**
      * conn - The connection to the database file.
      */
     private static Connection conn;
-
     /**
      * insertionStmt - The final line used to insert valid records.
      */
     private static String insertionStmt = "";
-
     /**
      * numReceived - The number of records in the CSV file.
      */
     private static int numReceived = 0;
-
     /**
      * numSuccessful - The number of successful insertions into db.
      */
     private static int numSuccessful = 0;
-
 
     /**
      * Main method for the class, which creates the GUIs and launches
@@ -163,7 +154,7 @@ public class CSVParser extends JPanel {
      * @return - The string (A,B,C...) where A,B,C... are the headers of the db.
      * @throws SQLException - For db connection and table creation.
      */
-    public static String generateDBTable() throws SQLException {
+    private static String generateDBTable() throws SQLException {
         // Create new database file
         conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
 
@@ -199,7 +190,7 @@ public class CSVParser extends JPanel {
      * @param headerString - The previously generated header string.
      * @throws SQLException - For the insertion process
      */
-    public static void insertIntoDB(String headerString) throws SQLException {
+    private static void insertIntoDB(String headerString) throws SQLException {
         // Begin insertion string
         insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
 

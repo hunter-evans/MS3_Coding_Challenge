@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="baec4977-9a1c-4173-bbb0-991411faca16" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ms3/evans/CSVParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ms3/evans/CSVParser.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -21,10 +22,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ms3/evans/CSVParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="2125">
+              <caret line="173" column="38" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#CSVParser#0" />
+                <element signature="docComment;field#textArea#0;class#CSVParser#0" />
+                <element signature="docComment;field#fileScanner#0;class#CSVParser#0" />
+                <element signature="docComment;field#filename#0;class#CSVParser#0" />
+                <element signature="docComment;field#badPrintWriter#0;class#CSVParser#0" />
+                <element signature="e#1278#1355#0" />
+                <element signature="docComment;field#conn#0;class#CSVParser#0" />
+                <element signature="docComment;field#insertionStmt#0;class#CSVParser#0" />
+                <element signature="docComment;field#numReceived#0;class#CSVParser#0" />
+                <element signature="docComment;field#numSuccessful#0;class#CSVParser#0" />
+                <element signature="docComment;method#main#0;class#CSVParser#0" />
+                <element signature="docComment;method#parseFile#0;class#CSVParser#0" />
+                <element signature="docComment;method#generateDBTable#0;class#CSVParser#0" />
+                <element signature="docComment;method#insertIntoDB#0;class#CSVParser#0" />
+                <element signature="docComment;method#parseLine#0;class#CSVParser#0" />
+                <element signature="docComment;method#customSplit#0;class#CSVParser#0" />
                 <element signature="e#8097#8105#0" expanded="true" />
               </folding>
             </state>
@@ -298,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599833156670</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Reorganized methods and added additional comments.">
+      <created>1599835661576</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1599835661576</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -319,7 +342,7 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12783661" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12783661" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" weight="0.32872504" />
       <window_info anchor="bottom" id="Terminal" weight="0.27258566" />
@@ -334,7 +357,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32872504" />
       <window_info anchor="right" id="Palette" />
       <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" visible="true" weight="0.12632374" />
+      <window_info anchor="right" id="Maven" weight="0.12632374" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="right" id="Palette&#9;" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -356,7 +379,8 @@
     <MESSAGE value="Fully functional (w/graphics) in Intellij." />
     <MESSAGE value="Fully working project with GUIs." />
     <MESSAGE value="Finished formatting/commenting pom.xml." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished formatting/commenting pom.xml." />
+    <MESSAGE value="Reorganized methods and added additional comments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganized methods and added additional comments." />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -395,9 +419,6 @@
         <state relative-caret-position="-1071" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ms3Interview.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/ms3Interview-bad.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -408,12 +429,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ms3Interview.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ms3/evans/CSVParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="2125">
+          <caret line="173" column="38" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#CSVParser#0" />
+            <element signature="docComment;field#textArea#0;class#CSVParser#0" />
+            <element signature="docComment;field#fileScanner#0;class#CSVParser#0" />
+            <element signature="docComment;field#filename#0;class#CSVParser#0" />
+            <element signature="docComment;field#badPrintWriter#0;class#CSVParser#0" />
+            <element signature="e#1278#1355#0" />
+            <element signature="docComment;field#conn#0;class#CSVParser#0" />
+            <element signature="docComment;field#insertionStmt#0;class#CSVParser#0" />
+            <element signature="docComment;field#numReceived#0;class#CSVParser#0" />
+            <element signature="docComment;field#numSuccessful#0;class#CSVParser#0" />
+            <element signature="docComment;method#main#0;class#CSVParser#0" />
+            <element signature="docComment;method#parseFile#0;class#CSVParser#0" />
+            <element signature="docComment;method#generateDBTable#0;class#CSVParser#0" />
+            <element signature="docComment;method#insertIntoDB#0;class#CSVParser#0" />
+            <element signature="docComment;method#parseLine#0;class#CSVParser#0" />
+            <element signature="docComment;method#customSplit#0;class#CSVParser#0" />
             <element signature="e#8097#8105#0" expanded="true" />
           </folding>
         </state>
