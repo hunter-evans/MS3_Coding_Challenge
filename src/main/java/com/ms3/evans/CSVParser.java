@@ -9,151 +9,134 @@ import java.io.*;
 import javax.swing.*;
 
 /**
- * Submission for the MS3 coding challenge. This class takes as a command
- * line input a CSV file and generates an SQLite database file, a bad CSV
- * file, and a log file with statistics.
+ * Submission for the MS3 coding challenge. This class takes as input a
+ * CSV file using a GUI and outputs a SQLite database file, a bad CSV
+ * file, and a log file with statistics in the directory of the program.
  *
  * @author Hunter Evans
  * @version 1.0.0
  */
 public class CSVParser extends JPanel {
+    /**
+     * textArea - The text area representing output for the program.
+     */
+    private static JTextArea textArea;
 
     /**
-     * numReceived - number of records in the CSV file
+     * fileScanner - The scanner for the CSV file.
+     */
+    private static Scanner fileScanner;
+
+    /**
+     * filename - The name of the csv (w/o file extension)
+     */
+    private static String filename;
+
+    /**
+     * badPrintWriter - The print writer for the bad CSV file.
+     */
+    private static PrintWriter badPrintWriter;
+
+    /**
+     * headers - The ArrayList containing the headers for the db.
+     */
+    private static ArrayList<String> headers;
+
+    /**
+     * conn - The connection to the database file.
+     */
+    private static Connection conn;
+
+    /**
+     * insertionStmt - The final line used to insert valid records.
+     */
+    private static String insertionStmt = "";
+
+    /**
+     * numReceived - The number of records in the CSV file.
      */
     private static int numReceived = 0;
 
     /**
-     * numSuccessful - number of successful insertions into db
+     * numSuccessful - The number of successful insertions into db.
      */
     private static int numSuccessful = 0;
 
-    /**
-     * insertionStmt - the final line used to insert valid records
-     */
-    private static String insertionStmt = "";
-
-    private static JTextArea textArea;
-
-    private static PrintWriter badPrintWriter;
 
     /**
-     * Main method for the class, which launches the GUIs and the parser.
+     * Main method for the class, which creates the GUIs and launches
+     * the parser.
      */
     public static void main(String[] args) {
-
+        // Create JFrame to hold the text
         JFrame frame = new JFrame();
+        // Instantiate the text area.
         textArea = new JTextArea();
-        JScrollPane scroll = new JScrollPane(textArea);
+        // Create a scroll bar for the text area and add to frame.
+        frame.getContentPane().add(new JScrollPane(textArea));
 
+        // Set the title of the GUI
         frame.setTitle("CSV to SQLite Database Parser");
+        // Set the dimensions (resizeable) of the GUI
         frame.setSize(600,400);
-        frame.setLocation(200,200);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
-        frame.getContentPane().add(scroll);
+        // Set the default location.
+        frame.setLocation(200,200);
+        // Ensure that the window is visible
+        frame.setVisible(true);
+        // Set the default closing action (terminate)
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Generate Swingx file chooser.
+        // Generate file chooser GUI.
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
 
-        // Get file from file chooser
-        File file = chooser.getSelectedFile();
-        textArea.append("You have selected: " + file.getName() + "\n");
-
         try {
             // Parse file from the chooser.
-            parseFile(file);
-            textArea.append("Program complete!\n");
+            parseFile(chooser.getSelectedFile());
+            textArea.append("Program complete! Please close the program.\n");
         }
         // If file not found, print error message.
         catch (FileNotFoundException e) {
             textArea.append("\n" + e + "\n");
         }
-
     }
 
     /**
      * This method executes the actions at a high level needed to parse the
      * file, including setting up scanners and print writers, generating the
-     * headers, iterating over the CSV, and writing the log file.
+     * headers, connecting to the database, iterating over the CSV, and
+     * writing the log file.
      *
      * @param fileArg - The CSV file
      * @throws FileNotFoundException - For the scanners and print writers
      */
     private static void parseFile(File fileArg) throws FileNotFoundException {
 
-        textArea.append("Beginning file parse...\n");
+        textArea.append("You have selected: " + fileArg.getName() + "\nBeginning file parse...\n");
 
-        // Try to open file scanner
-        Scanner fileScanner = new Scanner(fileArg, "UTF-8");
+        // Try to open file scanner (ensure UTF-8 encoding for non-standard characters).
+        fileScanner = new Scanner(fileArg, "UTF-8");
 
         // Generate the filename w/o extension
-        String filename = fileArg.getName().substring(0, fileArg.getName().length() - 4);
+        filename = fileArg.getName().substring(0, fileArg.getName().length() - 4);
 
         // Generate print writer for bad CSV file
         badPrintWriter = new PrintWriter(filename + "-bad.csv");
 
         // Get headers from first line
-        ArrayList<String> headers = customSplit(fileScanner.nextLine());
-
+        headers = customSplit(fileScanner.nextLine());
 
         try {
-            // Create new database file
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
-
-            textArea.append("Connection established to database file.\nCreating new table...\n");
-
-            // Create string for table creation
-            String sql = "CREATE TABLE IF NOT EXISTS " + filename + "(\n";
-            // Header string for insertion (later)
-            String headerString = "(";
-
-            // Iterate through headers, adding to both strings
-            for (String s : headers) {
-                sql = sql + "\t" + s + " TEXT NOT NULL,\n";
-                headerString = headerString + s + ",";
-            }
-
-            // Properly cap off each string
-            sql = sql.substring(0,sql.length()-2) + "\n);";
-            headerString = headerString.substring(0,headerString.length()-1) + ")";
-
-            // Execute the creation statement
-            conn.createStatement().execute(sql);
+            // Generate the db file and create table, getting a header string back
+            String headerString = generateDBTable();
 
             textArea.append("Table successfully created.\nBeginning record processing...\n");
 
-            // Begin insertion string
-            insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
-
-            // Iterate over the file while there are still lines
-            while (fileScanner.hasNext()) {
-
-                // Call the method to parse the line.
-                parseLine(fileScanner.nextLine(), headers.size());
-
-                // Print out a status report every 100 entries.
-                if (numReceived % 100 == 0) {
-                    textArea.append(numReceived + "\tRecords Processed.\n");
-                }
-                // if (numReceived %10 == 0) {
-                //     insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
-                //     conn.createStatement().execute(insertionStmt);
-                //     insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
-                //     badPrintWriter.flush();
-                // }
-            }
-
-            textArea.append("Finished processing. Beginning record insertion...\n");
-
-            // Modify and execute the insertion statement.
-            insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
-            conn.createStatement().execute(insertionStmt);
+            // Begin the insertion process
+            insertIntoDB(headerString);
 
             textArea.append("All records successfully inserted. Outputting statistics...\n");
-
         }
         // Catch any exceptions during creation/insertion.
         catch (SQLException e) {
@@ -166,13 +149,79 @@ public class CSVParser extends JPanel {
         // Generate a print writer for the log file.
         PrintWriter pw = new PrintWriter(filename + ".log");
         // Write the statistics.
-        pw.println("Number of records received: \t" + numReceived);
-        pw.println("Number of records successful: \t" + numSuccessful);
-        pw.println("Number of records failed: \t" + (numReceived - numSuccessful));
+        pw.println("Number of records received:   " + numReceived);
+        pw.println("Number of records successful: " + numSuccessful);
+        pw.println("Number of records failed:     " + (numReceived - numSuccessful));
         // Close the log file print writer.
         pw.close();
-
     }
+
+    /**
+     * This method establishes a connection to the db file, creates the table for
+     * the db file, and generates a string of the headers (used for insertion).
+     *
+     * @return - The string (A,B,C...) where A,B,C... are the headers of the db.
+     * @throws SQLException - For db connection and table creation.
+     */
+    public static String generateDBTable() throws SQLException {
+        // Create new database file
+        conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
+
+        textArea.append("Connection established to database file.\nCreating new table...\n");
+
+        // Create string for table creation
+        String sql = "CREATE TABLE IF NOT EXISTS " + filename + "(\n";
+        // Header string for insertion (used later)
+        String headerString = "(";
+
+        // Iterate through headers, adding to both strings
+        for (String s : headers) {
+            sql = sql + "\t" + s + " TEXT NOT NULL,\n";
+            headerString = headerString + s + ",";
+        }
+
+        // Properly cap off each string
+        sql = sql.substring(0,sql.length()-2) + "\n);";
+        headerString = headerString.substring(0,headerString.length()-1) + ")";
+
+        // Execute the creation statement
+        conn.createStatement().execute(sql);
+
+        // Return the generated header string.
+        return headerString;
+    }
+
+    /**
+     * This method performs the insertion process by generating the insertion
+     * string, iterating over the lines of the file, and inserting the string
+     * into the db.
+     *
+     * @param headerString - The previously generated header string.
+     * @throws SQLException - For the insertion process
+     */
+    public static void insertIntoDB(String headerString) throws SQLException {
+        // Begin insertion string
+        insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
+
+        // Iterate over the file while there are still lines
+        while (fileScanner.hasNext()) {
+            // Call the method to parse the line.
+            parseLine(fileScanner.nextLine(), headers.size());
+
+            // Print out a status report every 100 entries.
+            if (numReceived % 100 == 0) {
+                textArea.append(numReceived + "\tRecords Processed.\n");
+            }
+        }
+
+        textArea.append("Finished processing. Beginning record insertion...\n");
+
+        // Modify and execute the insertion statement.
+        insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
+        conn.createStatement().execute(insertionStmt);
+    }
+
+
     /**
      * This method performs the necessary actions to parse a single line of the
      * CSV, including writing to the bad CSV, splitting, and inserting into the
@@ -196,20 +245,19 @@ public class CSVParser extends JPanel {
             // Generate record for insertion
             String sql = "\n\t(";
 
-            // Iterate over parts of line, adding quotations as necessary.
+            // Iterate over parts of line
             for (String s : lineParts) {
-
+                // Add quotations if they are not present
                 if (s.substring(0,1).compareTo("\"") != 0) {
                     sql = sql + "\"" + s + "\"" + ",";
                 }
                 else {
                     sql = sql + s + ",";
                 }
-
             }
+
             // Modify the end of the string
             insertionStmt = insertionStmt + sql.substring(0,sql.length()-1) + "),";
-
         }
         // If there are not the correct number of entries
         else {
@@ -229,7 +277,6 @@ public class CSVParser extends JPanel {
      * @return An ArrayList of the atoms of the line.
      */
     private static ArrayList<String> customSplit(String line) {
-
         // Create expandable list
         ArrayList<String> result = new ArrayList<String>();
         // Create buffer to contain characters
@@ -242,7 +289,6 @@ public class CSVParser extends JPanel {
 
         // Iterate over the characters in the line
         for (char ch : chars) {
-
             if (inQuotes) {
                 // Move out of inQuote mode if second quote encountered
                 if (ch == '"') {
