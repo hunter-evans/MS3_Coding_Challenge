@@ -1,5 +1,6 @@
 package com.ms3.evans;
 
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -7,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Submission for the MS3 coding challenge. This class takes as a command
@@ -16,7 +19,7 @@ import javax.swing.*;
  * @author Hunter Evans
  * @version 1.0.0
  */
-public class CSVParser {
+public class CSVParser extends JPanel implements ActionListener {
 
     /**
      * numReceived - number of records in the CSV file
@@ -33,10 +36,58 @@ public class CSVParser {
      */
     private static String insertionStmt = "";
 
+
+    protected static JTextArea textArea;
+    private final static String newline = "\n";
+
+    public CSVParser() {
+        super(new GridBagLayout());
+
+        textArea = new JTextArea(5, 20);
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        //Add Components to this panel.
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        add(scrollPane, c);
+    }
+
+    public void actionPerformed(ActionEvent evt) { }
+
+    /**
+     * Create the GUI and show it.  For thread safety,
+     * this method should be invoked from the
+     * event dispatch thread.
+     */
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("CSV to Database Parser");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Add contents to the window.
+        frame.add(new CSVParser());
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+
     /**
      * Main method for the class, which launches the parser.
      */
     public static void main(String[] args) {
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
 
         // Generate Swingx file chooser.
         JFileChooser chooser = new JFileChooser();
@@ -44,16 +95,16 @@ public class CSVParser {
 
         // Get file from file chooser
         File file = chooser.getSelectedFile();
-        System.out.println("You have selected: " + file.getName());
+        textArea.append("You have selected: " + file.getName() + newline);
 
         try {
             // Parse file from the chooser.
             parseFile(file);
-            System.out.println("Program complete!");
+            textArea.append("Program complete!" + newline);
         }
         // If file not found, print error message.
         catch (FileNotFoundException e) {
-            System.err.println("\n" + e + "\n");
+            textArea.append("\n" + e + "\n");
         }
 
     }
@@ -68,7 +119,7 @@ public class CSVParser {
      */
     private static void parseFile(File fileArg) throws FileNotFoundException {
 
-        System.out.println("Beginning file parse...");
+        textArea.append("Beginning file parse..." + newline);
 
         // Try to open file scanner
         Scanner fileScanner = new Scanner(fileArg);
@@ -86,7 +137,7 @@ public class CSVParser {
             // Create new database file
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + filename + ".db");
 
-            System.out.println("Connection established to database file.\nCreating new table...");
+            textArea.append("Connection established to database file.\nCreating new table..." + newline);
 
             // Create string for table creation
             String sql = "CREATE TABLE IF NOT EXISTS " + filename + "(\n";
@@ -106,7 +157,7 @@ public class CSVParser {
             // Execute the creation statement
             conn.createStatement().execute(sql);
 
-            System.out.println("Table successfully created.\nBeginning record processing...");
+            textArea.append("Table successfully created.\nBeginning record processing..." + newline);
 
             // Begin insertion string
             insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
@@ -119,22 +170,22 @@ public class CSVParser {
 
                 // Print out a status report every 100 entries.
                 if (numReceived % 100 == 0) {
-                    System.out.println(numReceived + "\tRecords Processed.");
+                    textArea.append(numReceived + "\tRecords Processed." + newline);
                 }
             }
 
-            System.out.println("Finished processing. Beginning record insertion...");
+            textArea.append("Finished processing. Beginning record insertion..." + newline);
 
             // Modify and execute the insertion statement.
             insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
             conn.createStatement().execute(insertionStmt);
 
-            System.out.println("All records successfully inserted. Outputting statistics...");
+            textArea.append("All records successfully inserted. Outputting statistics..." + newline);
 
         }
         // Catch any exceptions during creation/insertion.
         catch (SQLException e) {
-            System.err.println("\n" + e.getMessage() + "\n");
+            textArea.append("\n" + e.getMessage() + "\n");
         }
 
         // Close the bad CSV print writer
