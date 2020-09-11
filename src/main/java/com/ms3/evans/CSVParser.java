@@ -35,8 +35,10 @@ public class CSVParser extends JPanel {
 
     private static JTextArea textArea;
 
+    private static PrintWriter badPrintWriter;
+
     /**
-     * Main method for the class, which launches the parser.
+     * Main method for the class, which launches the GUIs and the parser.
      */
     public static void main(String[] args) {
 
@@ -84,18 +86,24 @@ public class CSVParser extends JPanel {
 
         textArea.append("Beginning file parse...\n");
 
-
         // Try to open file scanner
-        Scanner fileScanner = new Scanner(fileArg);
+        Scanner fileScanner = new Scanner(fileArg, "UTF-8");
 
         // Generate the filename w/o extension
         String filename = fileArg.getName().substring(0, fileArg.getName().length() - 4);
 
         // Generate print writer for bad CSV file
-        PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
+        badPrintWriter = new PrintWriter(filename + "-bad.csv");
 
         // Get headers from first line
         ArrayList<String> headers = customSplit(fileScanner.nextLine());
+
+        // try{
+        //     Class.forName("org.sqlite.JDBC");
+        // }
+        // catch (ClassNotFoundException e) {
+        //     textArea.append("\n" + e + "\n");
+        // }
 
         try {
             // Create new database file
@@ -130,12 +138,18 @@ public class CSVParser extends JPanel {
             while (fileScanner.hasNext()) {
 
                 // Call the method to parse the line.
-                parseLine(fileScanner.nextLine(), badPrintWriter, headers.size());
+                parseLine(fileScanner.nextLine(), headers.size());
 
                 // Print out a status report every 100 entries.
                 if (numReceived % 100 == 0) {
                     textArea.append(numReceived + "\tRecords Processed.\n");
                 }
+                // if (numReceived %10 == 0) {
+                //     insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
+                //     conn.createStatement().execute(insertionStmt);
+                //     insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
+                //     badPrintWriter.flush();
+                // }
             }
 
             textArea.append("Finished processing. Beginning record insertion...\n");
@@ -160,7 +174,7 @@ public class CSVParser extends JPanel {
         // Write the statistics.
         pw.println("Number of records received: \t" + numReceived);
         pw.println("Number of records successful: \t" + numSuccessful);
-        pw.println("Number of records failed: \t\t" + (numReceived - numSuccessful));
+        pw.println("Number of records failed: \t" + (numReceived - numSuccessful));
         // Close the log file print writer.
         pw.close();
 
@@ -171,11 +185,9 @@ public class CSVParser extends JPanel {
      * database file.
      *
      * @param line - The line from the CSV.
-     * @param badPW - The print writer for the bad CSV.
      * @param numHeaders - The number of columns (headers) for the database.
      */
-    private static void parseLine(String line, PrintWriter badPW, int numHeaders) {
-
+    private static void parseLine(String line, int numHeaders) {
         // Increment number of received records
         numReceived++;
 
@@ -208,7 +220,7 @@ public class CSVParser extends JPanel {
         // If there are not the correct number of entries
         else {
             // Write the line to the bad CSV file
-            badPW.println(line);
+            badPrintWriter.println(line);
         }
     }
 
