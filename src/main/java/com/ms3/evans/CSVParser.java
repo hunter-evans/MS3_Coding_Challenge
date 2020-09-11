@@ -199,15 +199,21 @@ public class CSVParser extends JPanel {
             // Call the method to parse the line.
             parseLine(fileScanner.nextLine(), headers.size());
 
-            // Print out a status report every 100 entries.
             if (numReceived % 100 == 0) {
+                // Print out a status report every 100 entries.
                 textArea.append(numReceived + "\tRecords Processed.\n");
+                // Flush the bad-csv print writer.
+                badPrintWriter.flush();
+                // Execute an insertion and start a new string.
+                insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
+                conn.createStatement().execute(insertionStmt);
+                insertionStmt = "INSERT INTO " + filename + headerString + "\nVALUES";
             }
         }
 
         textArea.append("Finished processing. Beginning record insertion...\n");
 
-        // Modify and execute the insertion statement.
+        // Modify and execute the final insertion statement.
         insertionStmt = insertionStmt.substring(0,insertionStmt.length()-1) + ";";
         conn.createStatement().execute(insertionStmt);
     }
