@@ -98,12 +98,6 @@ public class CSVParser extends JPanel {
         // Get headers from first line
         ArrayList<String> headers = customSplit(fileScanner.nextLine());
 
-        // try{
-        //     Class.forName("org.sqlite.JDBC");
-        // }
-        // catch (ClassNotFoundException e) {
-        //     textArea.append("\n" + e + "\n");
-        // }
 
         try {
             // Create new database file
