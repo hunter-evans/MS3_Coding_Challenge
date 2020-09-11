@@ -48,7 +48,7 @@ public class CSVParser {
 
         try {
             // Parse file from the chooser.
-            parseFile(file.getName());
+            parseFile(file);
             System.out.println("Program complete!");
         }
         // If file not found, print error message.
@@ -63,18 +63,18 @@ public class CSVParser {
      * file, including setting up scanners and print writers, generating the
      * headers, iterating over the CSV, and writing the log file.
      *
-     * @param fileArg - The name of the file
+     * @param fileArg - The CSV file
      * @throws FileNotFoundException - For the scanners and print writers
      */
-    private static void parseFile(String fileArg) throws FileNotFoundException {
+    private static void parseFile(File fileArg) throws FileNotFoundException {
 
         System.out.println("Beginning file parse...");
 
         // Try to open file scanner
-        Scanner fileScanner = new Scanner(new File(fileArg));
+        Scanner fileScanner = new Scanner(fileArg);
 
         // Generate the filename w/o extension
-        String filename = fileArg.substring(0, fileArg.length() - 4);
+        String filename = fileArg.getName().substring(0, fileArg.getName().length() - 4);
 
         // Generate print writer for bad CSV file
         PrintWriter badPrintWriter = new PrintWriter(filename + "-bad.csv");
