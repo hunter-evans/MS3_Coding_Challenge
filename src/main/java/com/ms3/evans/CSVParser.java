@@ -1,8 +1,5 @@
 package com.ms3.evans;
 
-import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
-
-import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -10,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.*;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Submission for the MS3 coding challenge. This class takes as a command
@@ -46,6 +42,7 @@ public class CSVParser extends JPanel {
 
         JFrame frame = new JFrame();
         textArea = new JTextArea();
+        JScrollPane scroll = new JScrollPane(textArea);
 
         frame.setTitle("CSV to SQLite Database Parser");
         frame.setSize(600,400);
@@ -53,7 +50,7 @@ public class CSVParser extends JPanel {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
-        frame.getContentPane().add(textArea);
+        frame.getContentPane().add(scroll);
 
         // Generate Swingx file chooser.
         JFileChooser chooser = new JFileChooser();
@@ -70,7 +67,7 @@ public class CSVParser extends JPanel {
         }
         // If file not found, print error message.
         catch (FileNotFoundException e) {
-            System.err.println("\n" + e + "\n");
+            textArea.append("\n" + e + "\n");
         }
 
     }
@@ -86,6 +83,7 @@ public class CSVParser extends JPanel {
     private static void parseFile(File fileArg) throws FileNotFoundException {
 
         textArea.append("Beginning file parse...\n");
+
 
         // Try to open file scanner
         Scanner fileScanner = new Scanner(fileArg);
@@ -151,7 +149,7 @@ public class CSVParser extends JPanel {
         }
         // Catch any exceptions during creation/insertion.
         catch (SQLException e) {
-            System.err.println("\n" + e.getMessage() + "\n");
+            textArea.append("\n" + e.getMessage() + "\n");
         }
 
         // Close the bad CSV print writer
