@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="baec4977-9a1c-4173-bbb0-991411faca16" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/parser_challenge-1.0-SNAPSHOT-jar-with-dependencies.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ms3/evans/CSVParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ms3/evans/CSVParser.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -164,6 +164,9 @@
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\H_Evans\Desktop\parser_challenge" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\H_Evans\Desktop\parser_challenge" />
       <recent name="C:\Users\H_Evans\Desktop\parser_challenge\src\main\resources" />
@@ -321,7 +324,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599835661576</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Made final commenting changes.">
+      <created>1599835870713</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1599835870713</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -335,7 +345,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
@@ -380,7 +389,8 @@
     <MESSAGE value="Fully working project with GUIs." />
     <MESSAGE value="Finished formatting/commenting pom.xml." />
     <MESSAGE value="Reorganized methods and added additional comments." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganized methods and added additional comments." />
+    <MESSAGE value="Made final commenting changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made final commenting changes." />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
